@@ -121,62 +121,6 @@
             gap: 1.5rem;
         }
 
-        @media (max-width: 1200px) {
-            .dashboard-container {
-                grid-template-columns: 320px 1fr;
-                grid-template-areas:
-                    "sidebar main"
-                    "sidebar right";
-            }
-        }
-
-        @media (max-width: 900px) {
-            .dashboard-container {
-                display: flex;
-                flex-direction: column;
-                padding: 1rem;
-                gap: 1.5rem;
-                max-width: 100%;
-            }
-
-            .sidebar {
-                position: relative;
-                top: 0;
-                width: 100%;
-            }
-
-            .main-content {
-                width: 100%;
-            }
-
-            :root {
-                --fz-h1: 2.2rem;
-                --fz-h2: 1.8rem;
-                --fz-h3: 1.3rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr !important;
-                padding: 0 1rem !important;
-                gap: 0.75rem !important;
-            }
-
-            .profile-image {
-                width: 100px;
-                height: 100px;
-                margin-top: -50px;
-            }
-
-            .name {
-                font-size: 1.8rem;
-            }
-
-            .card {
-                padding: 1.25rem;
-            }
-        }
 
         /* Glassmorphism Card Style */
         .card {
@@ -720,10 +664,6 @@
             display: block;
             font-size: 1.75rem;
             font-weight: 700;
-            background: var(--gradient-celestial);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
             font-family: var(--font-display);
             margin-bottom: 0.25rem;
         }
@@ -733,6 +673,99 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-dim);
+        }
+
+        /* --- THE NUCLEAR MOBILE RESET --- */
+        @media (max-width: 900px) {
+            * {
+                /* Aggressive reset for all elements on mobile to force flow */
+                box-sizing: border-box !important;
+            }
+
+            .dashboard-container,
+            .sidebar,
+            .main-content,
+            .right-column,
+            .card,
+            .section-header,
+            .experience-item,
+            .stats-grid,
+            .stat-item,
+            .profile-card {
+                position: static !important;
+                display: block !important;
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 0 1.5rem 0 !important;
+                padding: 1rem !important;
+                transform: none !important;
+                animation: none !important;
+                z-index: 1 !important;
+                float: none !important;
+                max-width: 100% !important;
+                overflow: visible !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+
+            .dashboard-container {
+                display: flex !important;
+                flex-direction: column !important;
+                padding: 1rem !important;
+                gap: 0 !important;
+            }
+
+            /* Disable hover effects & pseudo-elements that might cause overlap */
+            .card::before,
+            .card::after,
+            .section-header h2::after {
+                display: none !important;
+            }
+
+            /* Restore specific grid for stats for readability */
+            .stats-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.75rem !important;
+                padding: 1rem !important;
+                margin-top: 1rem !important;
+            }
+
+            .stat-item {
+                margin: 0 !important;
+                padding: 0.75rem !important;
+            }
+
+            .profile-image {
+                position: static !important;
+                margin: 1rem auto !important;
+                transform: none !important;
+                width: 100px !important;
+                height: 100px !important;
+            }
+
+            .profile-banner {
+                display: none !important;
+                /* Remove banner to simplify mobile header */
+            }
+
+            .name,
+            .title {
+                text-align: center !important;
+                margin: 0.5rem 0 !important;
+            }
+
+            :root {
+                --fz-h1: 1.8rem;
+                --fz-h2: 1.5rem;
+                --fz-h3: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr !important;
+            }
         }
     </style>
 </head>
@@ -746,8 +779,7 @@
             <div class="profile-card card">
                 <div class="profile-banner"></div>
                 <div class="profile-image">
-                    <img id="profile-pic" src="/Users/s.premkumar/Downloads/ca1fcb3b-bf2e-4929-886e-af2477741b25.jpg"
-                        alt="S. Prem Kumar">
+                    <img id="profile-pic" src="profile.jpg" alt="S. Prem Kumar">
                 </div>
                 <h1 class="name" style="margin-top: 0.5rem;">S. Prem Kumar</h1>
                 <p class="title">Climate Risk Data Scientist</p>
@@ -755,7 +787,7 @@
                 <div class="stats-grid" style="padding: 0 1.5rem; grid-template-columns: repeat(2, 1fr);">
                     <div class="stat-item">
                         <span class="stat-value count-up" data-target="2">0</span>
-                        <span class="stat-label">Coperate Exp</span>
+                        <span class="stat-label">Corporate Exp</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-value count-up" data-target="4">0</span>
