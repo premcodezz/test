@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S. Prem Kumar | Climate Risk Data Scientist</title>
+    <meta name="description"
+        content="Resume Dashboard of S. Prem Kumar, Climate Risk Data Scientist specializes in Sea Level Rise, InSAR, and GIS.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --bg-card: rgba(22, 22, 24, 0.9);
+            --bg-glass: rgba(255, 255, 255, 0.04);
+
+            /* Soothing Climate Stripes Palette */
+            --stripe-blue-deep: #4393c3;
+            --stripe-blue-light: #92c5de;
+            --stripe-mist: #f7f7f7;
+            --stripe-peach: #f4a582;
+            --stripe-red: #d6604d;
+
+            --accent-primary: var(--stripe-blue-light);
+            --accent-secondary: var(--stripe-peach);
+
+            --gradient-celestial: linear-gradient(135deg, var(--stripe-blue-deep), var(--stripe-blue-light), var(--stripe-mist), var(--stripe-peach));
+            --gradient-qr-high-contrast: linear-gradient(135deg, #2563eb, #3b82f6, #6366f1);
+            --gradient-progress: linear-gradient(to right, var(--stripe-red), var(--stripe-peach), var(--stripe-blue-light), var(--stripe-blue-deep));
+
+            --text-primary: #ffffff;
+            --text-secondary: #ffffff;
+            /* Same brightness as primary for readability */
+            --text-dim: #f3f4f6;
+            /* Brighter dim state */
+            --border-glass: rgba(255, 255, 255, 0.2);
+
+            --font-display: 'EB Garamond', serif;
+            --font-serif: 'EB Garamond', serif;
+            --font-sans: 'EB Garamond', serif;
+
+            /* Base Typography Scale */
+            --fz-base: 18px;
+            --fz-h1: 3.5rem;
+            --fz-h2: 2.2rem;
+            --fz-h3: 1.5rem;
+            --fz-body: 1.05rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-serif);
+            font-weight: 500;
+            /* Medium weight for "brighter" body text */
+            line-height: 1.7;
+            /* Increased for airiness */
+            overflow-x: hidden;
+            text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(29, 78, 216, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(30, 64, 175, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        h1,
+        h2,
+        h3,
+        .name {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            /* Medium-Bold for better definition */
+            letter-spacing: 0.02em;
+            /* Slightly wider for modern clarity */
+            margin: 0;
+            text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+            /* Subtle edge illumination */
+        }
+
+        h2 {
+            font-size: var(--fz-h2);
+            line-height: 1.2;
+        }
+
+        h3 {
+            font-size: var(--fz-h3);
+            line-height: 1.3;
+        }
+
+        p {
+            font-size: var(--fz-body);
+            color: var(--text-secondary);
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 320px 1fr 300px;
+            grid-template-areas:
+                "sidebar main right"
+                "sidebar main right";
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .dashboard-container {
+                grid-template-columns: 320px 1fr;
+                grid-template-areas:
+                    "sidebar main"
+                    "sidebar right";
+            }
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "sidebar"
+                    "main"
+                    "right";
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            :root {
+                --fz-h1: 2.2rem;
+                --fz-h2: 1.8rem;
+                --fz-h3: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr !important;
+                padding: 0 1rem !important;
+            }
+
+            .profile-image {
+                width: 100px;
+                height: 100px;
+                margin-top: -50px;
+            }
+
+            .name {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Glassmorphism Card Style */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y),
+                    rgba(96, 165, 250, 0.12),
+                    transparent 40%);
+            border-radius: inherit;
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            border-color: rgba(96, 165, 250, 0.6);
+            box-shadow: 0 15px 45px 0 rgba(0, 0, 0, 0.6), 0 0 25px rgba(96, 165, 250, 0.2);
+            transform: translateY(-5px) scale(1.01);
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            grid-area: sidebar;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+            z-index: 10;
+        }
+
+        .profile-card {
+            text-align: center;
+            padding: 0 !important;
+            /* Remove default padding for banner to be full width */
+            overflow: hidden;
+            z-index: 11;
+            position: relative;
+        }
+
+        .profile-banner {
+            height: 90px;
+            width: 100%;
+            /* Sophisticated multi-stop stripes */
+            background: linear-gradient(to right,
+                    #08306b 0%, #08306b 10%,
+                    #2171b5 10%, #2171b5 20%,
+                    #6baed6 20%, #6baed6 30%,
+                    #bdd7e7 30%, #bdd7e7 40%,
+                    #f7f7f7 40%, #f7f7f7 50%,
+                    #fddbc7 50%, #fddbc7 60%,
+                    #f4a582 60%, #f4a582 70%,
+                    #d6604d 70%, #d6604d 80%,
+                    #b2182b 80%, #b2182b 90%,
+                    #67000d 90%, #67000d 100%);
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: -60px auto 1rem;
+            /* Negative margin to pull it half-way onto the banner */
+            background: rgba(10, 10, 12, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid var(--bg-card);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.8);
+            transition: transform 0.5s ease;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            /* Ensure image is clipped to circle */
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card:hover .profile-image {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .name {
+            font-size: 2.2rem;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.01em;
+            background: var(--gradient-celestial);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title {
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info {
+            text-align: left;
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-item:hover {
+            color: var(--text-primary);
+        }
+
+        .contact-item i {
+            color: var(--accent-blue);
+            width: 16px;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            grid-area: main;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--accent-blue);
+        }
+
+        .experience-item {
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 1.5rem;
+            border-left: 1px solid var(--border-glass);
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 5px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            box-shadow: 0 0 10px var(--accent-blue);
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .exp-role {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .exp-company {
+            color: var(--accent-blue);
+            font-size: 0.95rem;
+        }
+
+        .exp-time {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        .exp-bullets {
+            list-style: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .exp-bullets li {
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .exp-bullets li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-size: 0.8rem;
+        }
+
+        /* Skills Styling */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Contact QR Card */
+        .contact-qr-card {
+            text-align: center;
+            padding: 1.5rem !important;
+        }
+
+        .qr-container {
+            background: white;
+            padding: 12px;
+            border-radius: 16px;
+            display: inline-block;
+            margin: 1rem 0;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        /* High-Contrast Gradient QR Masking */
+        .qr-gradient-mask {
+            width: 140px;
+            height: 140px;
+            background: var(--gradient-qr-high-contrast);
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            -webkit-mask-mode: luminance;
+            mask-mode: luminance;
+            margin: 0 auto;
+        }
+
+        .contact-meta {
+            text-align: left;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .meta-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meta-item i {
+            color: var(--stripe-blue-light);
+            width: 16px;
+        }
+
+        .skill-group h4 {
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Right Column Styling */
+        .right-column {
+            grid-area: right;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .education-card {
+            margin-bottom: 1rem;
+        }
+
+        .edu-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .edu-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .edu-degree {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .edu-inst {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .edu-meta {
+            display: flex;
+            flex-direction: column;
+            margin-top: 0.75rem;
+            gap: 0.5rem;
+        }
+
+        .edu-progress-container {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-glass);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .edu-progress-bar {
+            height: 100%;
+            background: var(--gradient-progress);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 1.5s cubic-bezier(0.1, 0.5, 0.2, 1);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+        }
+
+        .edu-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+        }
+
+        .edu-cgpa {
+            font-weight: 700;
+            color: var(--accent-blue);
+            font-family: var(--font-display);
+        }
+
+        /* Awards Card */
+        .award-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .award-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(251, 191, 36, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fbbf24;
+            flex-shrink: 0;
+        }
+
+        .award-info {
+            color: var(--text-secondary);
+        }
+
+        .award-highlight {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Link proof style */
+        .proof-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.7rem;
+            margin-left: 4px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .proof-link:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-glass);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--border-glass);
+        }
+
+        /* Logo styling */
+        .header-logo {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 100px;
+            height: auto;
+            opacity: 0.5;
+            filter: grayscale(1) invert(1);
+        }
+
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-glass);
+            border-radius: 16px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: var(--gradient-celestial);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: var(--font-display);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar animate">
+            <div class="profile-card card">
+                <div class="profile-banner"></div>
+                <div class="profile-image">
+                    <img id="profile-pic" src="/Users/s.premkumar/Downloads/ca1fcb3b-bf2e-4929-886e-af2477741b25.jpg"
+                        alt="S. Prem Kumar">
+                </div>
+                <h1 class="name" style="margin-top: 0.5rem;">S. Prem Kumar</h1>
+                <p class="title">Climate Risk Data Scientist</p>
+
+                <div class="stats-grid" style="padding: 0 1.5rem; grid-template-columns: repeat(2, 1fr);">
+                    <div class="stat-item">
+                        <span class="stat-value count-up" data-target="2">0</span>
+                        <span class="stat-label">Coperate Exp</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value count-up" data-target="4">0</span>
+                        <span class="stat-label">R&D Exp</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value count-up" data-target="2">0</span>
+                        <span class="stat-label">M.Tech</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value count-up" data-target="10">0</span>
+                        <span class="stat-label">Awards</span>
+                    </div>
+                </div>
+
+                <div class="contact-info" style="padding: 0 1.5rem 2rem;">
+                    <a href="#" class="contact-item">
+                        <i class="fa-solid fa-building"></i>
+                        <span>TechG-X Pvt Ltd, IIT Kanpur</span>
+                    </a>
+                    <a href="tel:+917417992482" class="contact-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+91-7417992482</span>
+                    </a>
+                    <a href="mailto:premkumarrss669@gmail.com" class="contact-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>premkumarrss669@gmail.com</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div class="skills-section card">
+                <h2>Skills</h2>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">R</span>
+                    <span class="skill-tag">Climate Modeling</span>
+                    <span class="skill-tag">InSAR Analysis</span>
+                    <span class="skill-tag">GIS</span>
+                    <span class="skill-tag">Machine Learning</span>
+                    <span class="skill-tag">Google Earth Engine</span>
+                    <span class="skill-tag">Remote Sensing</span>
+                    <span class="skill-tag">Statistical Analysis</span>
+                </div>
+            </div>
+
+            <!-- Contact QR Card -->
+            <div class="contact-qr-card card">
+                <h3>Contact vCard</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 0.8rem; color: var(--text-dim);">Scan to add S. Prem Kumar
+                    to your contacts.</p>
+                <div class="qr-container">
+                    <div class="qr-gradient-mask"
+                        style="-webkit-mask-image: url('https://api.qrserver.com/v1/create-qr-code/?size=150x150&color=ffffff&bgcolor=000000&ecc=H&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AFN%3AS.%20Prem%20Kumar%0ATITLE%3AClimate%20Risk%20Data%20Scientist%0ATEL%3BTYPE%3DCELL%3A%2B917417992482%0AEMAIL%3Apremkumarrss669%40gmail.com%0AEND%3AVCARD'); 
+                               mask-image: url('https://api.qrserver.com/v1/create-qr-code/?size=150x150&color=ffffff&bgcolor=000000&ecc=H&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AFN%3AS.%20Prem%20Kumar%0ATITLE%3AClimate%20Risk%20Data%20Scientist%0ATEL%3BTYPE%3DCELL%3A%2B917417992482%0AEMAIL%3Apremkumarrss669%40gmail.com%0AEND%3AVCARD');">
+                    </div>
+                </div>
+                <div class="contact-meta">
+                    <div class="meta-item"><i class="fa-solid fa-location-dot"></i> Chennai, India</div>
+                    <a href="data:text/vcard;charset=utf-8,BEGIN:VCARD%0AVERSION:3.0%0AFN:S.%20Prem%20Kumar%0ATITLE:Climate%20Risk%20Data%20Scientist%0ATEL;TYPE=CELL:+917417992482%0AEMAIL:premkumarrss669@gmail.com%0AMAP:Chennai,%20India%0AEND:VCARD"
+                        download="S_Prem_Kumar.vcf"
+                        style="font-size: 0.75rem; color: var(--stripe-blue-light); text-decoration: none; display: block; margin-top: 0.5rem; text-align: center;">
+                        <i class="fa-solid fa-download"></i> Download vCard File
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <section class="card animate delay-1">
+                <div class="section-header">
+                    <h2>Professional Experience</h2>
+                </div>
+
+                <!-- Experience Item 1 -->
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <div>
+                            <span class="exp-role">Data Scientist - Climate Science</span>
+                            <div class="exp-company">TechG-X Private Limited</div>
+                        </div>
+                        <span class="exp-time">June 2024 – Present</span>
+                    </div>
+                    <p class="exp-role" style="font-size: 0.9rem; color: var(--text-dim); margin-top: -0.25rem;">Sea
+                        Level Rise Projections for Coastal Zones of the USA</p>
+                    <ul class="exp-bullets">
+                        <li>Developed modeling and backend integration for property-level sea level rise projections.
+                        </li>
+                        <li>Created a scalable workflow currently used for state-wide climate risk analysis.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience Item 2 -->
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <div>
+                            <span class="exp-role">Senior Project Associate</span>
+                            <div class="exp-company">IIT Roorkee</div>
+                        </div>
+                        <span class="exp-time">Mar 2024 – June 2024</span>
+                    </div>
+                    <p class="exp-role" style="font-size: 0.9rem; color: var(--text-dim); margin-top: -0.25rem;">
+                        Tectonic Assembly of the Indian-Eurasian Collision</p>
+                    <ul class="exp-bullets">
+                        <li>Employed advanced remote sensing and GIS methodologies to explore complex geological
+                            processes.</li>
+                        <li>Analyzed patterns of uplift and subsidence using SAR data.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience Item 3 -->
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <div>
+                            <span class="exp-role">Project Associate</span>
+                            <div class="exp-company">IIT Madras</div>
+                        </div>
+                        <span class="exp-time">Oct 2021 – Feb 2024</span>
+                    </div>
+                    <p class="exp-role" style="font-size: 0.9rem; color: var(--text-dim); margin-top: -0.25rem;">Climate
+                        Change & Water Implications (Cauvery Basin)</p>
+                    <ul class="exp-bullets">
+                        <li>Employed parametric statistical analysis to assess precipitation and evaporation trends.
+                        </li>
+                        <li>Evaluated hydroclimatic regimes and water availability impacts regionally.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience Item 4 -->
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <div>
+                            <span class="exp-role">Research Assistant</span>
+                            <div class="exp-company">IIT Bombay</div>
+                        </div>
+                        <span class="exp-time">Jul 2020 – Sep 2021</span>
+                    </div>
+                    <p class="exp-role" style="font-size: 0.9rem; color: var(--text-dim); margin-top: -0.25rem;">Forest
+                        Monitoring using Remote Sensing</p>
+                    <ul class="exp-bullets">
+                        <li>Worked on LICSBAS framework for automating satellite In-SAR processing for Indian Geography.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Experience Item 5 -->
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <div>
+                            <span class="exp-role">Junior Research Fellow</span>
+                            <div class="exp-company">IIT Kanpur</div>
+                        </div>
+                        <span class="exp-time">May 2019 – Jun 2020</span>
+                    </div>
+                    <p class="exp-role" style="font-size: 0.9rem; color: var(--text-dim); margin-top: -0.25rem;">Surface
+                        and subsurface monitoring of Gorkha Earthquake using InSAR</p>
+                    <ul class="exp-bullets">
+                        <li>Conducted comprehensive study on the 2015 Gorkha Earthquake (EQ) in Nepal.</li>
+                        <li>Utilized ALOS-2 In-SAR data to estimate ground deformation.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="card animate delay-2">
+                <div class="section-header">
+                    <h2>Research & Projects</h2>
+                </div>
+
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <span class="exp-role">Evaluating Runoff in ERA5 Dataset</span>
+                        <span class="exp-time">IIT Madras</span>
+                    </div>
+                    <p class="exp-bullets" style="font-style: italic;">Faculty: Prof. Balaji Narasimhan</p>
+                </div>
+
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <span class="exp-role">Location based mapping of utility services</span>
+                        <span class="exp-time">IIT Kanpur</span>
+                    </div>
+                    <p class="exp-bullets" style="font-style: italic;">Faculty: Prof. Javed N Malik</p>
+                </div>
+
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <span class="exp-role">Rajiv Gandhi drinking mission project</span>
+                        <span class="exp-time">Bharathidasan University</span>
+                    </div>
+                    <p class="exp-bullets" style="font-style: italic;">Faculty: Prof. K. Palanivel</p>
+                </div>
+            </section>
+
+            <section class="card animate delay-3">
+                <div class="section-header">
+                    <h2>Industrial Training</h2>
+                </div>
+
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <span class="exp-role">Flood modelling for NE India and Bangladesh</span>
+                        <span class="exp-company">Google Dubai</span>
+                    </div>
+                    <p class="exp-bullets">Mentor: Mrs Noel Gorelick (Jul-may 2020)</p>
+                </div>
+
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <span class="exp-role">DAAD WISE Internship</span>
+                        <span class="exp-company">Technical University of Munich</span>
+                    </div>
+                    <p class="exp-bullets">Germany (May-Jul 2019)</p>
+                </div>
+
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <span class="exp-role">Mapping of coal seams (Jharia coal field)</span>
+                        <span class="exp-company">Geological Survey of India</span>
+                    </div>
+                    <p class="exp-bullets">Mentor: Mrs R Vijay Kumar (May-Jul 2014)</p>
+                </div>
+
+                <div class="experience-item" style="border-bottom: none;">
+                    <div class="exp-header">
+                        <span class="exp-role">Flood routing and modeling (Kerala flood)</span>
+                        <span class="exp-company">Bangalore University</span>
+                    </div>
+                    <p class="exp-bullets">Mentor: Prof. Renukaprasad TJ (May-Jul 2013)</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Column -->
+        <div class="right-column animate delay-4">
+            <section class="card">
+                <div class="section-header">
+                    <h2>Education</h2>
+                </div>
+
+                <div class="edu-item">
+                    <h3 class="edu-degree">M.Tech. (Geological Sciences)</h3>
+                    <p class="edu-inst">IIT Kanpur, Uttar Pradesh</p>
+                    <div class="edu-meta">
+                        <div class="edu-labels">
+                            <span class="edu-cgpa"><span class="count-up-decimal" data-target="8.41">0.00</span> /
+                                10</span>
+                            <span class="edu-year">2017--19</span>
+                        </div>
+                        <div class="edu-progress-container">
+                            <div class="edu-progress-bar" data-width="84.1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="edu-item">
+                    <h3 class="edu-degree">M.Tech. (Geosciences & Geoinformatics)</h3>
+                    <p class="edu-inst">Bharathidasan University, Tamil Nadu</p>
+                    <div class="edu-meta">
+                        <div class="edu-labels">
+                            <span class="edu-cgpa"><span class="count-up-decimal" data-target="8.79">0.00</span> / 10 <a
+                                    href="#" class="proof-link"><i class="fa-solid fa-link"></i></a></span>
+                            <span class="edu-year">2012--17</span>
+                        </div>
+                        <div class="edu-progress-container">
+                            <div class="edu-progress-bar" data-width="87.9"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="section-header">
+                    <h2>Achievements</h2>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-icon"><i class="fa-solid fa-award"></i></div>
+                    <div class="award-info">
+                        Qualified <span class="award-highlight">GATE (2017/16)</span>, JAM (2018), UGC-NET (2016)
+                    </div>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-icon"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="award-info">
+                        <span class="award-highlight">Top 10 Finalist</span> - Vishwakarma Awards (Rank 6/746)
+                    </div>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-icon"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+                    <div class="award-info">
+                        <span class="award-highlight">CSR Canara Bank grant</span> - ₹50.0 Lakhs (2022)
+                    </div>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-icon"><i class="fa-solid fa-earth-americas"></i></div>
+                    <div class="award-info">
+                        <span class="award-highlight">Nat-Geo Young Researcher</span> awardee (₹9.89 Lakhs)
+                    </div>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-icon"><i class="fa-solid fa-euro-sign"></i></div>
+                    <div class="award-info">
+                        <span class="award-highlight">NITI Aayog AIM ICDK</span> Research Grant (1000€)
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="section-header">
+                    <h2>Best Paper Awards</h2>
+                </div>
+                <div class="edu-item">
+                    <p class="edu-degree" style="font-size: 0.85rem;">Precambrian Terrains in India (2015)</p>
+                    <p class="edu-inst" style="font-size: 0.75rem;">Mineralogical Society of India</p>
+                </div>
+                <div class="edu-item">
+                    <p class="edu-degree" style="font-size: 0.85rem;">Future Earth Perspectives (2016)</p>
+                    <p class="edu-inst" style="font-size: 0.75rem;">5th Intl. Conference</p>
+                </div>
+                <div class="edu-item">
+                    <p class="edu-degree" style="font-size: 0.85rem;">FFCSWR-2013 Bangalore</p>
+                    <p class="edu-inst" style="font-size: 0.75rem;">Soil & Water Conservation</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer Note -->
+    <div style="text-align: center; padding: 2rem; color: var(--text-dim); font-size: 0.75rem;">
+        <p>© 2024 S. Prem Kumar | Climate Risk Data Scientist</p>
+        <p style="margin-top: 0.5rem;"><i class="fa-solid fa-circle-info"></i> Note: Full credentials and proofs
+            available upon request.</p>
+    </div>
+
+    <style>
+        /* Floating Zero-G Animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .card {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .card:nth-child(2n) {
+            animation-delay: -1s;
+            animation-duration: 7s;
+        }
+
+        .card:nth-child(3n) {
+            animation-delay: -2s;
+            animation-duration: 8s;
+        }
+
+        /* Enhanced Spotlight Layer */
+        .card::after {
+            content: "";
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
+                    rgba(96, 165, 250, 0.15),
+                    transparent 40%);
+            border-radius: inherit;
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--border-glass);
+        }
+
+        /* Background Canvas Styling */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            background-color: var(--bg-deep);
+            /* Move background here */
+        }
+
+        body {
+            background-color: transparent !important;
+            /* Allow canvas to be seen */
+            background-image: none !important;
+        }
+
+        .dashboard-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Global Cursor Glow */
+        .cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(800px circle at var(--cursor-x) var(--cursor-y),
+                    rgba(96, 165, 250, 0.03),
+                    transparent 50%);
+            z-index: -1;
+        }
+
+        /* Magnetic Target style */
+        .magnetic-wrap {
+            display: inline-block;
+            transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+        }
+    </style>
+
+    <div class="cursor-glow"></div>
+
+    <script>
+        // --- High-End Reactive Interactivity Engine ---
+
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        const cards = document.querySelectorAll('.card');
+        const profileImage = document.querySelector('.profile-image');
+
+        let mouseX = 0, mouseY = 0;
+        let particles = [];
+        const mouseRadius = 120; // Repellent radius
+
+        const particleColors = [
+            'rgba(59, 130, 246, 0.6)', // Blue
+            'rgba(34, 211, 230, 0.6)', // Cyan
+            'rgba(139, 92, 246, 0.6)'  // Violet
+        ];
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                // Radial 360-degree expansion logic - even slower for 'soothing' feel
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 0.2 + 0.05;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+
+                // Elegant smaller particles
+                this.size = Math.random() * 1.2 + 0.8;
+                this.maxLife = 400 + Math.random() * 200; // Ethereal long life
+                this.life = this.maxLife;
+                this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
+            }
+
+            draw() {
+                const alpha = this.life / this.maxLife;
+                // Soft fade-in and very sustained fade-out
+                const easedAlpha = alpha < 0.1 ? alpha * 10 : (alpha > 0.9 ? (1 - alpha) * 10 : 1);
+
+                // Extract base color and apply current alpha
+                const baseColor = this.color.replace('0.6', (easedAlpha * 0.45).toFixed(2));
+                ctx.fillStyle = baseColor;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            update() {
+                this.life--;
+
+                let dx = mouseX - this.x;
+                let dy = mouseY - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < mouseRadius && distance > 0) {
+                    let force = (mouseRadius - distance) / mouseRadius;
+                    let forceX = dx / distance;
+                    let forceY = dy / distance;
+                    // Ultra-gentle repellent force for 'soothing' move-away
+                    this.vx -= forceX * force * 0.25;
+                    this.vy -= forceY * force * 0.25;
+                }
+
+                // High friction for a very stable, drifting feel
+                this.vx *= 0.99;
+                this.vy *= 0.99;
+
+                this.x += this.vx;
+                this.y += this.vy;
+            }
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles = particles.filter(p => p.life > 0);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        resizeCanvas();
+        animate();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Interaction Tracker - Denser Emission
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            document.documentElement.style.setProperty('--cursor-x', `${mouseX}px`);
+            document.documentElement.style.setProperty('--cursor-y', `${mouseY}px`);
+
+            // Spawn particles - reduced for mobile
+            const isMobile = window.innerWidth < 768;
+            const spawnCount = isMobile ? 2 : 5;
+            for (let i = 0; i < spawnCount; i++) {
+                particles.push(new Particle(mouseX, mouseY));
+            }
+
+            // UI Component interactions
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = mouseX - rect.left;
+                const y = mouseY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+
+                if (card.matches(':hover')) {
+                    card.style.transform = `translateY(-12px) scale(1.02)`;
+                    card.style.zIndex = "100";
+                    card.style.animation = "none";
+                } else {
+                    card.style.transform = '';
+                    card.style.zIndex = "";
+                    card.style.animation = "";
+                }
+            });
+
+            if (profileImage) {
+                const rect = profileImage.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const distance = Math.hypot(mouseX - centerX, mouseY - centerY);
+                if (distance < 200) {
+                    profileImage.style.transform = `translate(${(mouseX - centerX) * 0.3}px, ${(mouseY - centerY) * 0.3}px) scale(1.1)`;
+                } else {
+                    profileImage.style.transform = '';
+                }
+            }
+        });
+
+        // Anti-gravity Fade In & Progressive Animation (Counters)
+        const observerOptions = { threshold: 0.1 };
+
+        const animationObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animate progress bars
+                    const progressBars = entry.target.querySelectorAll('.edu-progress-bar');
+                    progressBars.forEach(bar => {
+                        bar.style.width = bar.dataset.width + '%';
+                    });
+
+                    // Animate numbers
+                    const counters = entry.target.querySelectorAll('.count-up, .count-up-decimal');
+                    counters.forEach(counter => {
+                        const target = +counter.dataset.target;
+                        const isDecimal = counter.classList.contains('count-up-decimal');
+                        const duration = 2500;
+                        const startTime = performance.now();
+
+                        const updateCounter = (currentTime) => {
+                            const elapsed = currentTime - startTime;
+                            const progress = Math.min(elapsed / duration, 1);
+
+                            // Easing function (easeOutExpo)
+                            const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                            const currentVal = easeProgress * target;
+
+                            counter.innerText = isDecimal ? currentVal.toFixed(2) : Math.floor(currentVal);
+
+                            if (progress < 1) requestAnimationFrame(updateCounter);
+                            else counter.innerText = isDecimal ? target.toFixed(2) : target + (entry.target.closest('.stats-grid') ? '+' : '');
+                        };
+                        requestAnimationFrame(updateCounter);
+                    });
+
+                    animationObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        cards.forEach(card => animationObserver.observe(card));
+    </script>
+</body>
+
+</html>
